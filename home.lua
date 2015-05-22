@@ -9,6 +9,7 @@ local backgroundLayer
 local textLayer
 local bg 
 local playButton
+local abletoTap
 
 ----------------------------------------------- Constants
 
@@ -32,17 +33,19 @@ local WHITE_COLOR = {1,1,1}
 
 local function play(event)
     transition.cancel("playAnimation")
+	if abletoTap then
+		abletoTap = false
+		local sceneEffect = math.random(1,#SCENE_EFFECT)
 
-    local sceneEffect = math.random(1,#SCENE_EFFECT)
+		local options = {
+			effect = SCENE_EFFECT[sceneEffect],
+			time = 800,
+		}
 
-    local options = {
-        effect = SCENE_EFFECT[sceneEffect],
-        time = 800,
-    }
-
-    transition.to(playButton, {time = 1000, rotation = 360, onComplete = function()
-        composer.gotoScene("game", options)
-    end})
+		transition.to(playButton, {time = 1000, rotation = 360, onComplete = function()
+			composer.gotoScene("game", options)
+		end})
+	end
     return true
 end
 
@@ -57,7 +60,8 @@ end
 local function initialize()
     local randomColor = math.random(1, #COLORS)
     bg:setFillColor( unpack(COLORS[randomColor]) )
-
+	
+	abletoTap = true
     playButton.xScale = 1
     playButton.yScale = 1
     playButton.rotation = 0
