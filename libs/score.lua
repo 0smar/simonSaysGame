@@ -36,7 +36,7 @@ function M.add( amount )
 end
 
 function M.save()
-   local path = system.pathForFile( M.filename, system.DocumentsDirectory )
+   local path = system.pathForFile( M.filename, system.ResourceDirectory )
    local file = io.open(path, "w")
    if ( file ) then
       local contents = tostring( M.score )
@@ -50,7 +50,7 @@ function M.save()
 end
 
 function M.load()
-   local path = system.pathForFile( M.filename, system.DocumentsDirectory )
+   local path = system.pathForFile( M.filename, system.ResourceDirectory )
    local contents = ""
    local file = io.open( path, "r" )
    if ( file ) then
